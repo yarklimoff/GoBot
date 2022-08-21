@@ -17,7 +17,7 @@ type WeatherForecast struct {
 }
 
 func main() {
-	bot, err := tgbotapi.NewBotAPI("5464054367:AAFPqxCh-DcnHjFE1v5d6VcuJ6XdEyUaG5o")
+	bot, err := tgbotapi.NewBotAPI(telergam_api_key)
 	if err != nil {
 		log.Panic(err)
 	}
@@ -50,10 +50,12 @@ func main() {
 
 					url := "https://api.weather.yandex.ru/v2/informers?lat="+lat+"&lon="+lon
 					req, _ := http.NewRequest("GET", url, nil)
-					req.Header.Add("X-Yandex-API-Key", "c88489a3-1663-44d9-9bcf-f5958f825115")
+					req.Header.Add("X-Yandex-API-Key", yandex_api_key)
+
 					res, _ := http.DefaultClient.Do(req)
 					defer res.Body.Close()
 					body, _ := ioutil.ReadAll(res.Body)
+					
 					var weather WeatherForecast
 					err := json.Unmarshal(body, &weather)
 					if err == nil {
